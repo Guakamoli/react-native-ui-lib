@@ -169,6 +169,9 @@ typedef NS_ENUM(NSUInteger, KeyboardTrackingScrollBehavior) {
 
 - (void)initializeAccessoryViewsAndHandleInsets
 {
+    if (self.window == nil) {
+        return;
+    }
     NSArray<UIView*>* allSubviews = [self getBreadthFirstSubviewsForView:[self getRootView]];
     NSMutableArray<RCTScrollView*>* rctScrollViewsArray = [NSMutableArray array];
 
@@ -346,7 +349,10 @@ typedef NS_ENUM(NSUInteger, KeyboardTrackingScrollBehavior) {
 {
     [super didMoveToWindow];
 
-    self.deferedInitializeAccessoryViewsCount = 0;
+    if (self.window == nil) {
+        self.deferedInitializeAccessoryViewsCount = 0;
+        return;
+    }
 
     [self deferedInitializeAccessoryViewsAndHandleInsets];
 }
